@@ -31,6 +31,8 @@ export const translations = {
     financialToolsTitle: "เครื่องมือวางแผนการเงิน",
     advancedPlanningTitle: "วางแผนการเงินล่วงหน้า",
     advancedPlanningDescription: "สร้างแผนการเงินระยะยาวเพื่ออนาคตที่มั่นคง",
+    habitConverterDescription: "เปลี่ยนรายจ่ายเล็กๆ เป็นเงินก้อนโตเพื่อปลดหนี้",
+    refinanceAlertDescription: "ระบบแจ้งเตือนโอกาสรีไฟแนนซ์บ้านและรวมหนี้อัตโนมัติ",
     startUsing: "เริ่มต้นใช้งาน",
 
     // Goals Page
@@ -159,6 +161,22 @@ export const translations = {
     sampleContentCaption: "ตัวอย่างหน้าในหนังสือที่อธิบายด้วย infographic ที่เข้าใจง่าย",
     bookstoreButton: "ร้านหนังสือ กดที่นี่",
     bookstoreLink: "https://collshp.com/the1percents",
+
+    // Habit Converter
+    habitConverterTitle: "แปลงร่างรายจ่ายจุกจิกเป็นพลังปลดหนี้",
+    habitCoffee: "ลดกาแฟ/ชานมไข่มุก 2 แก้ว/สัปดาห์ (ประหยัด 800.-)",
+    habitLottery: "ลดซื้อหวย/สลากลงครึ่งหนึ่ง (ประหยัด 1,000.-)",
+    habitDelivery: "ลดสั่ง Delivery เปลี่ยนมาทำเอง 3 มื้อ/สัปดาห์ (ประหยัด 1,200.-)",
+    habitStreaming: "ยกเลิกแอปสตรีมมิ่งที่ไม่ได้ใช้งาน (ประหยัด 200.-)",
+    extraSavingPower: "พลังโปะหนี้เพิ่มขึ้น",
+    habitSuccess: "เยี่ยมมาก! 🎉 แค่ปรับพฤติกรรมนิดหน่อย คุณจะประหยัดดอกเบี้ยได้และหมดหนี้ไวขึ้น!",
+    
+    // Refinance Alert
+    refinanceAlertTitle: "ระบบสะกิดเตือนรีไฟแนนซ์/รวมหนี้",
+    homeLoanRefinanceAlert: "ผ่อนบ้านครบ 3 ปีแล้ว! ดอกเบี้ยอาจจะกำลังลอยตัว ลองเช็คโปรโมชันรีไฟแนนซ์ (Refinance) หรือขอลดดอกเบี้ย (Retention) กับธนาคารเดิมดูไหม? อาจประหยัดได้หลักแสนเลยนะ!",
+    debtConsolidationAlert: "คุณมีหนี้ดอกเบี้ยสูงหลายก้อน ลองพิจารณาสินเชื่อรวมหนี้ (Debt Consolidation) เพื่อรวบเป็นก้อนเดียวที่ดอกเบี้ยถูกลง (เช่น 9% - 12%) จะช่วยให้ผ่อนสบายขึ้นและหมดหนี้ไวขึ้นครับ",
+    monthsPaid: "ผ่อนมาแล้ว (เดือน)",
+    readMoreRefinance: "อ่านคำแนะนำเพิ่มเติม",
   },
   en: {
     // Common
@@ -193,6 +211,8 @@ export const translations = {
     financialToolsTitle: "Financial Planning Tools",
     advancedPlanningTitle: "Advanced Financial Planning",
     advancedPlanningDescription: "Create long-term financial plans for a secure future",
+    habitConverterDescription: "Turn small expenses into big savings to clear debt",
+    refinanceAlertDescription: "Auto-alert system for home refinance and debt consolidation",
     startUsing: "Get Started",
 
     // Goals Page
@@ -323,6 +343,22 @@ export const translations = {
     sampleContentCaption: "Sample page from the book explained with easy-to-understand infographics",
     bookstoreButton: "Go to Bookstore",
     bookstoreLink: "https://collshp.com/the1percents",
+
+    // Habit Converter
+    habitConverterTitle: "The Daily-Habit Converter",
+    habitCoffee: "Reduce coffee/bubble tea 2 cups/week (Save 800.-)",
+    habitLottery: "Reduce lottery spending by half (Save 1,000.-)",
+    habitDelivery: "Cook instead of Delivery 3 meals/week (Save 1,200.-)",
+    habitStreaming: "Cancel unused streaming apps (Save 200.-)",
+    extraSavingPower: "Extra Debt Repayment Power",
+    habitSuccess: "Excellent! 🎉 Small habit changes will save you interest and clear debt faster!",
+
+    // Refinance Alert
+    refinanceAlertTitle: "Smart Refinance/Consolidation Alert",
+    homeLoanRefinanceAlert: "Home loan paid for 3 years! Interest might be floating. Check for Refinance or Retention with your bank! Could save you hundreds of thousands!",
+    debtConsolidationAlert: "Multiple high-interest debts detected. Consider Debt Consolidation to a lower rate (e.g., 9% - 12%) for easier payments and faster freedom.",
+    monthsPaid: "Months Paid",
+    readMoreRefinance: "Read More",
   },
 }
 

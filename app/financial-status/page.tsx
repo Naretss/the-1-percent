@@ -2,9 +2,22 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Moon, Sun, TrendingUp, Wallet, Home, Car, CreditCard, PiggyBank, Building } from "lucide-react"
+import {
+  ArrowLeft,
+  Moon,
+  Sun,
+  TrendingUp,
+  Wallet,
+  Home,
+  Car,
+  CreditCard,
+  PiggyBank,
+  Building,
+  Lightbulb,
+} from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Footer } from "@/components/Footer"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 interface AssetItem {
   id: string
@@ -20,6 +33,7 @@ interface LiabilityItem {
   category: string
   amount: number
   interestRate: number
+  monthsPaid: number
   iconType: string
 }
 
@@ -34,12 +48,44 @@ export default function FinancialStatusPage() {
   ])
 
   const [liabilities, setLiabilities] = useState<LiabilityItem[]>([
-    { id: "1", name: "สินเชื่อบ้าน", category: "สินเชื่อระยะยาว", amount: 750000, interestRate: 3.5, iconType: "home" },
-    { id: "2", name: "สินเชื่อรถยนต์", category: "สินเชื่อระยะกลาง", amount: 65000, interestRate: 5.2, iconType: "car" },
-    { id: "3", name: "บัตรเครดิต", category: "สินเชื่อระยะสั้น", amount: 35000, interestRate: 18, iconType: "creditcard" },
+    {
+      id: "1",
+      name: "สินเชื่อบ้าน",
+      category: "สินเชื่อระยะยาว",
+      amount: 750000,
+      interestRate: 3.5,
+      monthsPaid: 36,
+      iconType: "home",
+    },
+    {
+      id: "2",
+      name: "สินเชื่อรถยนต์",
+      category: "สินเชื่อระยะกลาง",
+      amount: 65000,
+      interestRate: 5.2,
+      monthsPaid: 12,
+      iconType: "car",
+    },
+    {
+      id: "3",
+      name: "บัตรเครดิต",
+      category: "สินเชื่อระยะสั้น",
+      amount: 35000,
+      interestRate: 18,
+      monthsPaid: 0,
+      iconType: "creditcard",
+    },
   ])
 
   const { t } = useLanguage()
+
+  // Refinance Alert Logic
+  const hasRefinanceOpportunity = liabilities.some(
+    (l) => (l.name.includes("บ้าน") || l.category.includes("บ้าน")) && l.monthsPaid >= 36,
+  )
+
+  const highInterestDebts = liabilities.filter((l) => l.interestRate >= 16)
+  const hasConsolidationOpportunity = highInterestDebts.length >= 2
 
   // Helper function to get icon component from iconType string
   const getIconComponent = (iconType: string) => {
@@ -95,9 +141,10 @@ export default function FinancialStatusPage() {
         setAssets(assetsWithIconType)
       }
       if (parsedData.liabilities) {
-        // Ensure iconType is set for loaded liabilities
+        // Ensure iconType and monthsPaid are set for loaded liabilities
         const liabilitiesWithIconType = parsedData.liabilities.map((liability: any) => ({
           ...liability,
+          monthsPaid: liability.monthsPaid || 0,
           iconType: liability.iconType || getIconTypeForLiability(liability.category, liability.name),
         }))
         setLiabilities(liabilitiesWithIconType)
@@ -170,6 +217,7 @@ export default function FinancialStatusPage() {
       category: "อื่นๆ",
       amount: 0,
       interestRate: 0,
+      monthsPaid: 0,
       iconType: "creditcard",
     }
     setLiabilities([...liabilities, newLiability])
@@ -322,6 +370,42 @@ export default function FinancialStatusPage() {
           </div>
         </div>
 
+        {/* Refinance Alerts */}
+        {(hasRefinanceOpportunity || hasConsolidationOpportunity) && (
+          <div className="mb-8 space-y-4">
+            <h2 className={`text-xl font-bold flex items-center gap-2 ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
+              <Lightbulb className="w-5 h-5" />
+              {t("refinanceAlertTitle")}
+            </h2>
+            
+            {hasRefinanceOpportunity && (
+              <Alert className={isDarkMode ? "bg-yellow-500/10 border-yellow-500/30 text-yellow-200" : "bg-yellow-50 border-yellow-200"}>
+                <Lightbulb className="h-4 w-4" />
+                <AlertTitle className="font-bold">Home Loan Refinance!</AlertTitle>
+                <AlertDescription className="mt-2">
+                  {t("homeLoanRefinanceAlert")}
+                  <button className="block mt-2 text-sm font-semibold underline hover:opacity-80">
+                    {t("readMoreRefinance")}
+                  </button>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {hasConsolidationOpportunity && (
+              <Alert className={isDarkMode ? "bg-blue-500/10 border-blue-500/30 text-blue-200" : "bg-blue-50 border-blue-200"}>
+                <Lightbulb className="h-4 w-4" />
+                <AlertTitle className="font-bold">Debt Consolidation!</AlertTitle>
+                <AlertDescription className="mt-2">
+                  {t("debtConsolidationAlert")}
+                  <button className="block mt-2 text-sm font-semibold underline hover:opacity-80">
+                    {t("readMoreRefinance")}
+                  </button>
+                </AlertDescription>
+              </Alert>
+            )}
+          </div>
+        )}
+
         {/* Assets Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
@@ -467,6 +551,11 @@ export default function FinancialStatusPage() {
                   <th
                     className={`px-6 py-3 text-center text-sm font-semibold ${isDarkMode ? "text-yellow-300" : "text-gray-700"}`}
                   >
+                    {t("monthsPaid")}
+                  </th>
+                  <th
+                    className={`px-6 py-3 text-center text-sm font-semibold ${isDarkMode ? "text-yellow-300" : "text-gray-700"}`}
+                  >
                     {t("management")}
                   </th>
                 </tr>
@@ -516,18 +605,32 @@ export default function FinancialStatusPage() {
                         />
                       </td>
                       <td className="px-6 py-4 text-center">
+                        <div className="flex items-center justify-center gap-1">
+                          <input
+                            type="number"
+                            step="0.1"
+                            value={liability.interestRate}
+                            onChange={(e) => updateLiability(liability.id, "interestRate", Number(e.target.value))}
+                            className={`text-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 w-20 ${
+                              isDarkMode
+                                ? "bg-gray-800 border-gray-600 text-gray-300 focus:ring-yellow-400"
+                                : "bg-white border-gray-300 text-gray-600 focus:ring-blue-500"
+                            }`}
+                          />
+                          <span className={isDarkMode ? "text-gray-400" : "text-gray-600"}>%</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-center">
                         <input
                           type="number"
-                          step="0.1"
-                          value={liability.interestRate}
-                          onChange={(e) => updateLiability(liability.id, "interestRate", Number(e.target.value))}
+                          value={liability.monthsPaid}
+                          onChange={(e) => updateLiability(liability.id, "monthsPaid", Number(e.target.value))}
                           className={`text-center px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 w-20 ${
                             isDarkMode
                               ? "bg-gray-800 border-gray-600 text-gray-300 focus:ring-yellow-400"
                               : "bg-white border-gray-300 text-gray-600 focus:ring-blue-500"
                           }`}
                         />
-                        %
                       </td>
                       <td className="px-6 py-4 text-center">
                         <div className="flex items-center justify-center gap-2">

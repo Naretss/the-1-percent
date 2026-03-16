@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Calendar, Moon, Sun } from "lucide-react"
+import { Calendar, Moon, Sun, Zap, Lightbulb } from "lucide-react"
 import { Footer } from "@/components/Footer"
 import { LanguageSelector } from "@/components/LanguageSelector"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -35,8 +35,8 @@ export default function HomePage() {
     setIsDarkMode(!isDarkMode)
   }
 
-  const handleStartPlanning = () => {
-    router.push("/money-planning")
+  const handleNavigate = (path: string) => {
+    router.push(path)
   }
 
   const tools = [
@@ -46,6 +46,15 @@ export default function HomePage() {
       description: t("advancedPlanningDescription"),
       icon: Calendar,
       color: "blue",
+      path: "/money-planning",
+    },
+    {
+      id: 2,
+      title: t("habitConverterTitle"),
+      description: t("habitConverterDescription"),
+      icon: Zap,
+      color: "yellow",
+      path: "/habit-converter",
     },
   ]
 
@@ -108,19 +117,19 @@ export default function HomePage() {
             {t("financialToolsTitle")}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-8 justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center max-w-4xl mx-auto">
             {tools.map((tool) => {
               const IconComponent = tool.icon
               return (
                 <div
                   key={tool.id}
-                  className={`p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer mx-auto max-w-md ${
+                  className={`p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer flex flex-col ${
                     isDarkMode
                       ? "bg-gray-800 border-gray-700 hover:border-yellow-400/50"
                       : "bg-white border-gray-200 hover:border-blue-300"
                   }`}
                 >
-                  <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center flex-1">
                     <div
                       className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${
                         tool.color === "blue"
@@ -131,9 +140,13 @@ export default function HomePage() {
                             ? isDarkMode
                               ? "bg-green-500/20 text-green-400"
                               : "bg-green-100 text-green-600"
-                            : isDarkMode
-                              ? "bg-purple-500/20 text-purple-400"
-                              : "bg-purple-100 text-purple-600"
+                            : tool.color === "yellow"
+                              ? isDarkMode
+                                ? "bg-yellow-500/20 text-yellow-400"
+                                : "bg-yellow-100 text-yellow-600"
+                              : isDarkMode
+                                ? "bg-purple-500/20 text-purple-400"
+                                : "bg-purple-100 text-purple-600"
                       }`}
                     >
                       <IconComponent className="w-8 h-8" />
@@ -146,18 +159,18 @@ export default function HomePage() {
                     <p className={`text-sm leading-relaxed mb-8 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
                       {tool.description}
                     </p>
-
-                    <button
-                      onClick={handleStartPlanning}
-                      className={`px-8 py-3 text-lg font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
-                        isDarkMode
-                          ? "bg-yellow-500 text-black hover:bg-yellow-400"
-                          : "bg-gray-800 text-white hover:bg-gray-700"
-                      }`}
-                    >
-                      {t("startUsing")}
-                    </button>
                   </div>
+                  
+                  <button
+                    onClick={() => handleNavigate(tool.path)}
+                    className={`mt-auto px-8 py-3 text-lg font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                      isDarkMode
+                        ? "bg-yellow-500 text-black hover:bg-yellow-400"
+                        : "bg-gray-800 text-white hover:bg-gray-700"
+                    }`}
+                  >
+                    {t("startUsing")}
+                  </button>
                 </div>
               )
             })}

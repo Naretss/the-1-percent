@@ -21,9 +21,13 @@ import {
   Car,
   Sun,
   Moon,
+  Zap,
 } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Footer } from "@/components/Footer"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts"
 
 const dimensionIcons = {
   1: Heart,
@@ -97,6 +101,20 @@ export default function ReportPage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const { t } = useLanguage()
+
+  // Habit Converter State
+  const [selectedHabits, setSelectedHabits] = useState<string[]>([])
+  const habits = [
+    { id: "coffee", translationKey: "habitCoffee", amount: 800 },
+    { id: "lottery", translationKey: "habitLottery", amount: 1000 },
+    { id: "delivery", translationKey: "habitDelivery", amount: 1200 },
+    { id: "streaming", translationKey: "habitStreaming", amount: 200 },
+  ]
+
+  const totalExtraSaving = selectedHabits.reduce((sum, habitId) => {
+    const habit = habits.find((h) => h.id === habitId)
+    return sum + (habit?.amount || 0)
+  }, 0)
 
   // Thai month names
   const thaiMonths = [
@@ -232,6 +250,10 @@ export default function ReportPage() {
 
   const handleBackToHome = () => {
     router.push("/")
+  }
+
+  const toggleHabit = (habitId: string) => {
+    setSelectedHabits((prev) => (prev.includes(habitId) ? prev.filter((id) => id !== habitId) : [...prev, habitId]))
   }
 
   const handleDownloadPDF = async () => {
@@ -498,6 +520,17 @@ export default function ReportPage() {
     )
   }
 
+  const chartData = [
+    {
+      name: "ปัจจุบัน",
+      value: financialData?.totalRemaining || 0,
+    },
+    {
+      name: "หลังปรับพฤติกรรม",
+      value: (financialData?.totalRemaining || 0) + totalExtraSaving * (financialData?.months || 1),
+    },
+  ]
+
   return (
     <div className={`min-h-screen font-sans ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
       <div className="container mx-auto px-8 py-8 max-w-4xl">
@@ -627,10 +660,99 @@ export default function ReportPage() {
                 })}
               </p>
             )}
-          </div>
+            </div>
 
-          {/* 6-Dimension Goals Section */}
-          {planData && (
+            {/* Daily-Habit Converter Section - GAMIFIED */}
+            <div className={`mb-12 p-8 rounded-3xl border-2 transition-all duration-500 ${isDarkMode ? "bg-gray-800/50 border-yellow-500/30 shadow-[0_0_30px_rgba(234,179,8,0.1)]" : "bg-yellow-50/50 border-yellow-200 shadow-lg"}`}>
+            <div className="flex items-center gap-4 mb-8">
+              <div className={`p-3 rounded-2xl ${isDarkMode ? "bg-yellow-500 text-black" : "bg-yellow-400 text-black"}`}>
+                <Zap className="w-8 h-8 fill-current" />
+              </div>
+              <div>
+                <h2 className={`text-2xl font-black ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
+                  {t("habitConverterTitle")}
+                </h2>
+                <p className={isDarkMode ? "text-yellow-100/70" : "text-gray-600"}>
+                  เปลี่ยนนิสัยเล็กๆ เป็นพลังปลดหนี้มหาศาล
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              {/* Checkboxes */}
+              <div className="space-y-4">
+                {habits.map((habit) => (
+                  <div 
+                    key={habit.id} 
+                    className={`flex items-center space-x-4 p-4 rounded-xl border transition-all duration-200 cursor-pointer ${
+                      selectedHabits.includes(habit.id) 
+                        ? (isDarkMode ? "bg-yellow-500/20 border-yellow-500/50" : "bg-yellow-100 border-yellow-300")
+                        : (isDarkMode ? "bg-gray-900/50 border-gray-700 hover:border-yellow-500/30" : "bg-white border-gray-200 hover:border-yellow-200")
+                    }`}
+                    onClick={() => toggleHabit(habit.id)}
+                  >
+                    <Checkbox 
+                      id={habit.id} 
+                      checked={selectedHabits.includes(habit.id)}
+                      onCheckedChange={() => toggleHabit(habit.id)}
+                      className="h-5 w-5 border-yellow-500 data-[state=checked]:bg-yellow-500"
+                    />
+                    <Label 
+                      htmlFor={habit.id} 
+                      className={`text-lg font-bold cursor-pointer flex-1 ${isDarkMode ? "text-yellow-100" : "text-gray-700"}`}
+                    >
+                      {t(habit.translationKey as any)}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+
+              {/* Visualization */}
+              <div className="h-64 relative">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <XAxis 
+                      dataKey="name" 
+                      stroke={isDarkMode ? "#FEF3C7" : "#374151"} 
+                      fontSize={14}
+                      fontWeight="bold"
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: isDarkMode ? "#1F2937" : "#FFFFFF",
+                        border: "none",
+                        borderRadius: "12px",
+                        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+                      }}
+                    />
+                    <Bar dataKey="value" radius={[10, 10, 0, 0]}>
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index === 0 ? "#94a3b8" : "#eab308"} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+
+                {totalExtraSaving > 0 && (
+                  <div className={`absolute -top-4 right-0 px-4 py-2 rounded-full font-black text-sm animate-bounce ${isDarkMode ? "bg-yellow-500 text-black" : "bg-yellow-400 text-black"}`}>
+                    +{totalExtraSaving.toLocaleString()} บาท/เดือน
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {totalExtraSaving > 0 && (
+              <div className={`mt-8 p-6 rounded-2xl text-center border-2 animate-in fade-in slide-in-from-bottom-4 duration-500 ${isDarkMode ? "bg-yellow-500 text-black border-yellow-400" : "bg-yellow-400 text-black border-yellow-500"}`}>
+                <p className="text-xl font-black mb-1">{t("habitSuccess")}</p>
+                <p className="font-bold opacity-80">
+                  คุณจะมีเงินเก็บเพิ่มขึ้นรวม <span className="text-2xl underline">{(totalExtraSaving * (financialData?.months || 1)).toLocaleString()}</span> บาท ในอีก {financialData?.months} เดือนข้างหน้า!
+                </p>
+              </div>
+            )}
+            </div>
+
+            {/* 6-Dimension Goals Section */}
+
             <div className="mb-12">
               <h2 className={`text-2xl font-bold mb-6 ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
                 {t("sixDimensionGoals")}
