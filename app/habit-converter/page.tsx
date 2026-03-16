@@ -62,7 +62,11 @@ export default function HabitConverterPage() {
     const savedHabits = localStorage.getItem("customHabits")
     if (savedHabits) {
       const parsed = JSON.parse(savedHabits)
-      setHabits(prev => [...prev, ...parsed])
+      setHabits(prev => {
+        const existingIds = new Set(prev.map(h => h.id))
+        const uniqueNew = parsed.filter((h: Habit) => !existingIds.has(h.id))
+        return [...prev, ...uniqueNew]
+      })
     }
   }, [])
 
@@ -414,21 +418,30 @@ export default function HabitConverterPage() {
             </div>
 
             {/* Dynamic Success Message */}
-            {extraSaving > 0 && (
-              <div className={`p-8 rounded-[2.5rem] text-center border-4 animate-in zoom-in duration-500 ${isDarkMode ? "bg-yellow-500 text-black border-yellow-400" : "bg-yellow-400 text-black border-yellow-500 shadow-2xl"}`}>
-                <p className="text-3xl font-black mb-4">เยี่ยมมาก! 🎉</p>
-                <p className="text-xl font-bold leading-relaxed">
-                  แค่ปรับพฤติกรรมนิดหน่อย คุณจะประหยัดดอกเบี้ยได้ <span className="underline decoration-black/30 underline-offset-4">{interestSaved.toLocaleString()}</span> บาท 
-                  และหมดหนี้ไวขึ้นถึง <span className="underline decoration-black/30 underline-offset-4">{Math.floor(timeSaved / 12)} ปี {timeSaved % 12} เดือน</span>!
-                </p>
-                <button 
-                  onClick={() => router.push("/money-planning")}
-                  className="mt-8 px-10 py-4 bg-black text-white font-black rounded-2xl hover:scale-105 transition-transform"
-                >
-                  เริ่มวางแผนจริงจังเลย!
-                </button>
-              </div>
-            )}
+            <div className={`p-8 rounded-[2.5rem] text-center border-4 animate-in zoom-in duration-500 ${isDarkMode ? "bg-yellow-500 text-black border-yellow-400" : "bg-yellow-400 text-black border-yellow-500 shadow-2xl"}`}>
+              {extraSaving > 0 ? (
+                <>
+                  <p className="text-3xl font-black mb-4">เยี่ยมมาก! 🎉</p>
+                  <p className="text-xl font-bold leading-relaxed">
+                    แค่ปรับพฤติกรรมนิดหน่อย คุณจะประหยัดดอกเบี้ยได้ <span className="underline decoration-black/30 underline-offset-4">{interestSaved.toLocaleString()}</span> บาท 
+                    และหมดหนี้ไวขึ้นถึง <span className="underline decoration-black/30 underline-offset-4">{Math.floor(timeSaved / 12)} ปี {timeSaved % 12} เดือน</span>!
+                  </p>
+                  <button 
+                    onClick={() => router.push("/money-planning")}
+                    className="mt-8 px-10 py-4 bg-black text-white font-black rounded-2xl hover:scale-105 transition-transform"
+                  >
+                    เริ่มวางแผนจริงจังเลย!
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-3xl font-black mb-4">เราทำได้! 💪</p>
+                  <p className="text-xl font-bold leading-relaxed">
+                    เลือกพลังงานวิเศษของเรากัน คนเก่ง
+                  </p>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

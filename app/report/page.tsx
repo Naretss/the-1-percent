@@ -752,7 +752,7 @@ export default function ReportPage() {
             </div>
 
             {/* 6-Dimension Goals Section */}
-
+          {planData && (
             <div className="mb-12">
               <h2 className={`text-2xl font-bold mb-6 ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
                 {t("sixDimensionGoals")}
