@@ -11,7 +11,7 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 })
 
 export const metadata: Metadata = {
-  title: "The1% by Narets Ngamsatain",
+  title: "The1% ก้าวแรกสู่อิสระ",
   description: "กำหนดเป้าหมายชีวิต 6 ด้าน ด้านละ 1 เป้าหมาย ที่จะตั้งใจทำให้สำเร็จ",
   icons: {
     icon: [

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Calendar, Moon, Sun, Zap, Lightbulb } from "lucide-react"
+import { Calendar, Moon, Sun, Zap, Lightbulb, Rocket, PiggyBank } from "lucide-react"
 import { Footer } from "@/components/Footer"
 import { LanguageSelector } from "@/components/LanguageSelector"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -55,6 +55,22 @@ export default function HomePage() {
       icon: Zap,
       color: "yellow",
       path: "/habit-converter",
+    },
+    {
+      id: 3,
+      title: t("firstMillionTitle" as any),
+      description: t("firstMillionDescription" as any),
+      icon: Rocket,
+      color: "green",
+      path: "/first-million",
+    },
+    {
+      id: 4,
+      title: t("wishlistTitle" as any),
+      description: t("wishlistDescription" as any),
+      icon: PiggyBank,
+      color: "purple",
+      path: "/wishlist",
     },
   ]
 
