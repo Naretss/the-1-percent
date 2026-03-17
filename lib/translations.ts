@@ -190,7 +190,7 @@ export const translations = {
     habitSuccess: "เยี่ยมมาก! 🎉 แค่ปรับพฤติกรรมนิดหน่อย คุณจะประหยัดดอกเบี้ยได้และหมดหนี้ไวขึ้น!",
 
     // Teen Wishlist
-    wishlistTitle: "กระปุกสานฝันอันวัยมันส์",
+    wishlistTitle: "กระปุกสานฝันวัยมันส์",
     wishlistDescription: "ของมันต้องมี! เปลี่ยนค่าขนมรายวัน เป็นไอเทมในฝันแบบชิลๆ",
     createGoal: "สร้างเป้าหมายใหม่เลย!",
     itemName: "ชื่อของที่อยากได้",
