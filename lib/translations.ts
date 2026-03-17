@@ -26,7 +26,7 @@ export const translations = {
 
     // Home Page - Main
     homeMainTitle: "The1%",
-    homeMainDescription: "The1% by Narets Ngamsatain เพจที่อยากช่วยให้การเงินดี อยากให้ผมทำเครื่องมือการเงินอะไร ทักมาได้เลยครับ",
+    homeMainDescription: "The1% เพจที่อยากช่วยให้การเงินดี อยากให้ผมทำเครื่องมือการเงินอะไร ทักมาได้เลยครับ",
     facebookLink: "https://www.facebook.com/the.one.percent.money/",
     financialToolsTitle: "เครื่องมือวางแผนการเงิน",
     advancedPlanningTitle: "วางแผนการเงินล่วงหน้า",
@@ -162,6 +162,24 @@ export const translations = {
     bookstoreButton: "ร้านหนังสือ กดที่นี่",
     bookstoreLink: "https://collshp.com/the1percents",
 
+    // First Million Roadmap
+    firstMillionTitle: "เส้นทางสู่เงินล้านแรก",
+    firstMillionDescription: "วางแผนลงทุนรายเดือน (DCA) เพื่อพิชิต 1,000,000 บาทแรกของคุณ",
+    monthlySaving: "เงินออมรายเดือน",
+    targetAmount: "เป้าหมายเงินออม",
+    investmentStyle: "เลือกสไตล์การลงทุน",
+    depositStyle: "เงินฝาก/สลาก (~2%/ปี)",
+    mixedFundStyle: "กองทุนรวมผสม (~5%/ปี)",
+    stockStyle: "หุ้น/กองทุนดัชนี (~8%/ปี)",
+    customStyle: "กำหนดเอง (%)",
+    goalAchievementTime: "เป้าหมาย {amount} บาทของคุณ จะสำเร็จในอีก...",
+    yearText: "ปี",
+    monthText: "เดือน",
+    yearsAndMonths: "{years} ปี {months} เดือน",
+    tipDeposit: "เน้นความปลอดภัย เงินต้นไม่หาย แต่อาจจะใช้เวลานานหน่อย แนะนำให้ศึกษาเรื่องสลากออมสิน หรือเงินฝากประจำดอกเบี้ยสูง",
+    tipMixedFund: "ความเสี่ยงปานกลาง มีโอกาสรับผลตอบแทนชนะเงินเฟ้อ แนะนำให้จัดพอร์ตกระจายความเสี่ยง (Asset Allocation)",
+    tipStock: "ความเสี่ยงสูง แลกมากับผลตอบแทนที่สูงกว่าในระยะยาว แนะนำกองทุนดัชนี (Index Fund) หรือหุ้นเติบโต",
+
     // Habit Converter
     habitConverterTitle: "แปลงร่างรายจ่ายจุกจิกเป็นพลังปลดหนี้",
     habitCoffee: "ลดกาแฟ/ชานมไข่มุก 2 แก้ว/สัปดาห์ (ประหยัด 800.-)",
@@ -170,6 +188,28 @@ export const translations = {
     habitStreaming: "ยกเลิกแอปสตรีมมิ่งที่ไม่ได้ใช้งาน (ประหยัด 200.-)",
     extraSavingPower: "พลังโปะหนี้เพิ่มขึ้น",
     habitSuccess: "เยี่ยมมาก! 🎉 แค่ปรับพฤติกรรมนิดหน่อย คุณจะประหยัดดอกเบี้ยได้และหมดหนี้ไวขึ้น!",
+
+    // Teen Wishlist
+    wishlistTitle: "กระปุกสานฝันอันวัยมันส์",
+    wishlistDescription: "ของมันต้องมี! เปลี่ยนค่าขนมรายวัน เป็นไอเทมในฝันแบบชิลๆ",
+    createGoal: "สร้างเป้าหมายใหม่เลย!",
+    itemName: "ชื่อของที่อยากได้",
+    itemPrice: "ราคาเท่าไหร่? (บาท)",
+    dailyAllowance: "ได้ค่าขนมวันละกี่บาท?",
+    itemPlaceholder: "เช่น บัตรคอน VIP, รองเท้าผ้าใบ",
+    savingPlan: "เลือกเส้นทางพิชิตฝัน",
+    chillPath: "สายชิลล์",
+    chillPathDesc: "แค่ลดน้ำอัดลม 1 ขวด/วัน...",
+    walkPath: "สายกลาง",
+    walkPathDesc: "แค่ทำกับข้าวไปกินเองบางมื้อ...",
+    racePath: "สายซิ่ง",
+    racePathDesc: "สายแข็ง! งดช้อปปิ้งจุกจิก...",
+    daysToGoal: "จะได้รับใน {days} วัน!",
+    savingProgress: "เก็บได้แล้ว {current} / {target} บาท ({percent}%)",
+    dropIntoPiggy: "✨ หยอดกระปุกวันนี้แล้ว!",
+    streakDays: "{days} Days Streak!",
+    streakMessage: "สุดยอด! คุณทำสำเร็จติดต่อกัน {days} วันแล้ว พยายามต่อไปนะวัยรุ่น!",
+    streakLost: "ว้า! ไฟดับซะแล้ว เริ่มเก็บใหม่ตั้งแต่วันนี้กันนะ!",
     
     // Refinance Alert
     refinanceAlertTitle: "ระบบสะกิดเตือนรีไฟแนนซ์/รวมหนี้",
@@ -206,7 +246,7 @@ export const translations = {
     // Home Page - Main
     homeMainTitle: "The1%",
     homeMainDescription:
-      "The1% by Narets Ngamsatain - A page dedicated to helping Thai people achieve better financial health. If you'd like me to create any financial tools, feel free to reach out!",
+      "The1% - A page dedicated to helping Thai people achieve better financial health. If you'd like me to create any financial tools, feel free to reach out!",
     facebookLink: "https://www.facebook.com/the.one.percent.money/",
     financialToolsTitle: "Financial Planning Tools",
     advancedPlanningTitle: "Advanced Financial Planning",
@@ -344,6 +384,24 @@ export const translations = {
     bookstoreButton: "Go to Bookstore",
     bookstoreLink: "https://collshp.com/the1percents",
 
+    // First Million Roadmap
+    firstMillionTitle: "The First Million Roadmap",
+    firstMillionDescription: "Plan your monthly investment (DCA) to conquer your first 1,000,000 THB",
+    monthlySaving: "Monthly Saving",
+    targetAmount: "Target Amount",
+    investmentStyle: "Investment Style",
+    depositStyle: "Deposit/Lottery (~2%/year)",
+    mixedFundStyle: "Mixed Mutual Fund (~5%/year)",
+    stockStyle: "Stock/Index Fund (~8%/year)",
+    customStyle: "Custom (%)",
+    goalAchievementTime: "Your {amount} THB goal will be achieved in...",
+    yearText: "years",
+    monthText: "months",
+    yearsAndMonths: "{years} years {months} months",
+    tipDeposit: "Low risk, capital is safe but takes longer. Recommended: Government Savings Bank lotteries or high-yield fixed deposits.",
+    tipMixedFund: "Medium risk, chance to beat inflation. Recommended: Asset Allocation portfolio.",
+    tipStock: "High risk, potentially higher long-term returns. Recommended: Index Funds or Growth Stocks.",
+
     // Habit Converter
     habitConverterTitle: "The Daily-Habit Converter",
     habitCoffee: "Reduce coffee/bubble tea 2 cups/week (Save 800.-)",
@@ -352,6 +410,28 @@ export const translations = {
     habitStreaming: "Cancel unused streaming apps (Save 200.-)",
     extraSavingPower: "Extra Debt Repayment Power",
     habitSuccess: "Excellent! 🎉 Small habit changes will save you interest and clear debt faster!",
+
+    // Teen Wishlist
+    wishlistTitle: "Teen Wishlist & Daily Saver",
+    wishlistDescription: "Must-have items! Turn daily snacks into your dream items easily",
+    createGoal: "Create new goal now!",
+    itemName: "Item Name",
+    itemPrice: "Price? (THB)",
+    dailyAllowance: "Daily Allowance? (THB)",
+    itemPlaceholder: "e.g. VIP Concert Ticket, Sneakers",
+    savingPlan: "Choose your path to victory",
+    chillPath: "Chill Path",
+    chillPathDesc: "Just skip 1 soda/day...",
+    walkPath: "Middle Path",
+    walkPathDesc: "Just bring your own lunch sometimes...",
+    racePath: "Racing Path",
+    racePathDesc: "Hardcore! No junk food...",
+    daysToGoal: "Get it in {days} days!",
+    savingProgress: "Saved {current} / {target} THB ({percent}%)",
+    dropIntoPiggy: "✨ Dropped into piggy bank today!",
+    streakDays: "{days} Days Streak!",
+    streakMessage: "Excellent! You've succeeded for {days} days in a row. Keep it up!",
+    streakLost: "Oh no! The fire is out. Let's start saving again today!",
 
     // Refinance Alert
     refinanceAlertTitle: "Smart Refinance/Consolidation Alert",

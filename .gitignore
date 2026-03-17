@@ -30,3 +30,5 @@ next-env.d.ts
 #file
 gemini.md
 history.md
+/prompt_backup
+prompt_backup
