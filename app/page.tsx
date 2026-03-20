@@ -49,6 +49,14 @@ export default function HomePage() {
       path: "/money-planning",
     },
     {
+      id: 5,
+      title: t("retirementSimulatorTitle" as any),
+      description: t("retirementSimulatorDescription" as any),
+      icon: Sun,
+      color: "yellow",
+      path: "/retirement-simulator",
+    },
+    {
       id: 2,
       title: t("habitConverterTitle"),
       description: t("habitConverterDescription"),
