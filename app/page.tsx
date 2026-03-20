@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Calendar, Moon, Sun, Zap, Lightbulb, Rocket, PiggyBank } from "lucide-react"
+import { Calendar, Moon, Sun, Zap, Rocket, PiggyBank, ShieldAlert, Sprout, TrendingUp, ArrowUpRight } from "lucide-react"
 import { Footer } from "@/components/Footer"
 import { LanguageSelector } from "@/components/LanguageSelector"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -17,7 +17,6 @@ export default function HomePage() {
     if (savedMode) {
       setIsDarkMode(JSON.parse(savedMode))
     } else {
-      // ถ้าไม่มีค่าที่บันทึกไว้ ให้ใช้ dark mode เป็น default
       setIsDarkMode(true)
     }
   }, [])
@@ -39,171 +38,189 @@ export default function HomePage() {
     router.push(path)
   }
 
-  const tools = [
+  const zones = [
     {
-      id: 1,
-      title: t("advancedPlanningTitle"),
-      description: t("advancedPlanningDescription"),
-      icon: Calendar,
-      color: "blue",
-      path: "/money-planning",
+      id: "zone2",
+      title: t("zone2Title"),
+      icon: Sprout,
+      accentColor: "text-yellow-400",
+      tools: [
+        {
+          id: 4,
+          title: t("wishlistTitle"),
+          description: t("wishlistCompactDesc" as any),
+          icon: PiggyBank,
+          color: "purple",
+          path: "/wishlist",
+        },
+        {
+          id: 3,
+          title: t("firstMillionTitle"),
+          description: t("firstMillionCompactDesc" as any),
+          icon: Rocket,
+          color: "green",
+          path: "/first-million",
+        },
+      ],
     },
     {
-      id: 5,
-      title: t("retirementSimulatorTitle" as any),
-      description: t("retirementSimulatorDescription" as any),
-      icon: Sun,
-      color: "yellow",
-      path: "/retirement-simulator",
+      id: "zone3",
+      title: t("zone3Title"),
+      icon: TrendingUp,
+      accentColor: "text-yellow-400",
+      tools: [
+        {
+          id: 5,
+          title: t("retirementSimulatorTitle"),
+          description: t("retirementSimulatorCompactDesc" as any),
+          icon: Sun,
+          color: "yellow",
+          path: "/retirement-simulator",
+        },
+        {
+          id: 1,
+          title: t("advancedPlanningTitle"),
+          description: t("advancedPlanningCompactDesc" as any),
+          icon: Calendar,
+          color: "blue",
+          path: "/money-planning",
+        },
+      ],
     },
     {
-      id: 2,
-      title: t("habitConverterTitle"),
-      description: t("habitConverterDescription"),
-      icon: Zap,
-      color: "yellow",
-      path: "/habit-converter",
-    },
-    {
-      id: 3,
-      title: t("firstMillionTitle" as any),
-      description: t("firstMillionDescription" as any),
-      icon: Rocket,
-      color: "green",
-      path: "/first-million",
-    },
-    {
-      id: 4,
-      title: t("wishlistTitle" as any),
-      description: t("wishlistDescription" as any),
-      icon: PiggyBank,
-      color: "purple",
-      path: "/wishlist",
+      id: "zone1",
+      title: t("zone1Title"),
+      icon: ShieldAlert,
+      accentColor: "text-red-400",
+      tools: [
+        {
+          id: 2,
+          title: t("habitConverterCompactTitle" as any),
+          description: t("habitConverterCompactDesc" as any),
+          icon: Zap,
+          color: "yellow",
+          path: "/habit-converter",
+        },
+      ],
     },
   ]
 
   return (
-    <div className={`min-h-screen transition-all duration-300 font-sans ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
+    <div className={`min-h-screen transition-all duration-300 font-sans ${isDarkMode ? "bg-slate-950 text-white" : "bg-gray-50 text-slate-900"}`}>
       {/* Header */}
-      <div className="container mx-auto px-8 py-6 max-w-7xl">
+      <div className="container mx-auto px-4 py-4 max-w-7xl">
         <div className="flex items-center justify-between">
-          {/* Language Selector */}
           <LanguageSelector isDarkMode={isDarkMode} />
 
           <div className="flex items-center gap-3">
-            {/* Logo */}
-            <div className="flex items-center">
-              <span className={`text-2xl font-bold ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
-                {t("homeMainTitle")}
-              </span>
-            </div>
-
-            {/* Dark Mode Toggle */}
+            <span className={`text-xl font-black tracking-tighter ${isDarkMode ? "text-yellow-400" : "text-indigo-900"}`}>
+              THE 1%
+            </span>
             <button
               onClick={toggleDarkMode}
-              className={`p-3 rounded-lg transition-all duration-300 hover:scale-110 font-medium ${
+              className={`p-2 rounded-xl transition-all duration-300 ${
                 isDarkMode
-                  ? "bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 border border-yellow-500/30"
-                  : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 shadow-md"
+                  ? "bg-slate-800 text-yellow-400 border border-slate-700"
+                  : "bg-white text-indigo-900 border border-gray-200 shadow-sm"
               }`}
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-8 py-16 max-w-6xl">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className={`text-6xl font-bold mb-6 ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
-            {t("homeMainTitle")}
-          </h1>
-          <p
-            className={`text-xl mb-12 leading-relaxed max-w-3xl mx-auto ${isDarkMode ? "text-yellow-200" : "text-gray-600"}`}
-          >
-            {t("homeMainDescription")}{" "}
-            <a
-              href={t("facebookLink")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-blue-500 hover:text-blue-600 dark:text-yellow-300 dark:hover:text-yellow-200"
-            >
-              {t("facebookLink")}
-            </a>
-          </p>
-        </div>
-
-        {/* Tools Section */}
-        <div className="mb-16">
-          <h2 className={`text-3xl font-bold text-center mb-12 ${isDarkMode ? "text-yellow-400" : "text-gray-800"}`}>
-            {t("financialToolsTitle")}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center max-w-4xl mx-auto">
-            {tools.map((tool) => {
-              const IconComponent = tool.icon
-              return (
-                <div
-                  key={tool.id}
-                  className={`p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer flex flex-col ${
-                    isDarkMode
-                      ? "bg-gray-800 border-gray-700 hover:border-yellow-400/50"
-                      : "bg-white border-gray-200 hover:border-blue-300"
-                  }`}
-                >
-                  <div className="flex flex-col items-center text-center flex-1">
-                    <div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${
-                        tool.color === "blue"
-                          ? isDarkMode
-                            ? "bg-blue-500/20 text-blue-400"
-                            : "bg-blue-100 text-blue-600"
-                          : tool.color === "green"
-                            ? isDarkMode
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-green-100 text-green-600"
-                            : tool.color === "yellow"
-                              ? isDarkMode
-                                ? "bg-yellow-500/20 text-yellow-400"
-                                : "bg-yellow-100 text-yellow-600"
-                              : isDarkMode
-                                ? "bg-purple-500/20 text-purple-400"
-                                : "bg-purple-100 text-purple-600"
-                      }`}
-                    >
-                      <IconComponent className="w-8 h-8" />
-                    </div>
-
-                    <h3 className={`text-xl font-semibold mb-4 ${isDarkMode ? "text-yellow-200" : "text-gray-800"}`}>
-                      {tool.title}
-                    </h3>
-
-                    <p className={`text-sm leading-relaxed mb-8 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
-                      {tool.description}
-                    </p>
-                  </div>
-                  
-                  <button
-                    onClick={() => handleNavigate(tool.path)}
-                    className={`mt-auto px-8 py-3 text-lg font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
-                      isDarkMode
-                        ? "bg-yellow-500 text-black hover:bg-yellow-400"
-                        : "bg-gray-800 text-white hover:bg-gray-700"
-                    }`}
-                  >
-                    {t("startUsing")}
-                  </button>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+      {/* Hero Section - Compact */}
+      <div className="container mx-auto px-4 pt-8 pb-10 max-w-5xl text-center">
+        <h1 className="text-4xl md:text-5xl font-black mb-3 tracking-tight">
+          {t("welcomeTitle")}
+        </h1>
+        <p className={`text-lg opacity-80 max-w-2xl mx-auto`}>
+          {t("welcomeSubtitle")}
+        </p>
       </div>
 
-      {/* Footer */}
+      {/* Goal Zones - Bento Grid (Centered) */}
+      <main className="container mx-auto px-4 pb-20 max-w-6xl space-y-12">
+        {zones.map((zone) => {
+          const ZoneIcon = zone.icon
+          return (
+            <section key={zone.id} className="space-y-6">
+              <div className="flex items-center justify-center gap-3 border-b pb-2 border-slate-200 dark:border-slate-800 max-w-2xl mx-auto">
+                <div className={`p-1.5 rounded-lg ${isDarkMode ? "bg-slate-800" : "bg-indigo-100"}`}>
+                  <ZoneIcon className={`w-5 h-5 ${zone.accentColor}`} />
+                </div>
+                <h2 className="text-xl font-bold uppercase tracking-wide opacity-90">
+                  {zone.title}
+                </h2>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+                {zone.tools.map((tool) => (
+                  <div key={tool.id} className="w-[calc(50%-6px)] md:w-[calc(33.333%-11px)] max-w-[320px]">
+                    <BentoCard 
+                      tool={tool} 
+                      isDarkMode={isDarkMode} 
+                      onNavigate={handleNavigate}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        })}
+      </main>
+
       <Footer isDarkMode={isDarkMode} />
+    </div>
+  )
+}
+
+function BentoCard({ tool, isDarkMode, onNavigate }: any) {
+  const Icon = tool.icon
+  
+  return (
+    <div
+      onClick={() => onNavigate(tool.path)}
+      className={`group relative p-5 md:p-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between h-full ${
+        isDarkMode
+          ? "bg-slate-900 border-slate-800 hover:border-yellow-400/50 hover:bg-slate-800/60"
+          : "bg-white border-gray-100 hover:border-indigo-300 shadow-sm hover:shadow-md"
+      }`}
+    >
+      <div className="relative z-10">
+        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 ${
+          tool.color === 'yellow' ? 'bg-yellow-400/10 text-yellow-400' :
+          tool.color === 'green' ? 'bg-green-400/10 text-green-400' :
+          tool.color === 'purple' ? 'bg-purple-400/10 text-purple-400' :
+          'bg-blue-400/10 text-blue-400'
+        }`}>
+          <Icon className="w-6 h-6 md:w-7 md:h-7" />
+        </div>
+
+        <h3 className="text-base md:text-lg font-bold leading-tight mb-1">
+          {tool.title}
+        </h3>
+        <p className="text-xs md:text-sm opacity-60 line-clamp-2">
+          {tool.description}
+        </p>
+      </div>
+
+      <div className="mt-4 flex justify-end">
+        <div className={`p-1.5 rounded-full transition-all duration-300 ${
+          isDarkMode ? "bg-slate-800 group-hover:bg-yellow-400 group-hover:text-black" : "bg-gray-100 group-hover:bg-indigo-600 group-hover:text-white"
+        }`}>
+          <ArrowUpRight className="w-4 h-4" />
+        </div>
+      </div>
+      
+      {/* Subtle hover glow */}
+      <div className={`absolute -right-4 -bottom-4 w-20 h-20 rounded-full blur-2xl transition-opacity duration-500 opacity-0 group-hover:opacity-10 ${
+        tool.color === 'yellow' ? 'bg-yellow-400' :
+        tool.color === 'green' ? 'bg-green-400' :
+        tool.color === 'purple' ? 'bg-purple-400' :
+        'bg-blue-400'
+      }`}></div>
     </div>
   )
 }

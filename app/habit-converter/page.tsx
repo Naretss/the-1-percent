@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Home, Zap, Moon, Sun, TrendingDown, DollarSign, Calendar, Plus, Trash2 } from "lucide-react"
+import { ArrowLeft, Zap, Moon, Sun, TrendingDown, DollarSign, Calendar, Plus, Trash2 } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { Footer } from "@/components/Footer"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { LanguageSelector } from "@/components/LanguageSelector"
 import {
   AreaChart,
   Area,
@@ -179,7 +180,7 @@ export default function HabitConverterPage() {
           </button>
 
           <div className="flex items-center gap-4">
-            <h2 className="text-xl font-bold hidden md:block">The 1% Habit Converter</h2>
+            <LanguageSelector isDarkMode={isDarkMode} />
             <button
               onClick={toggleDarkMode}
               className={`p-3 rounded-xl transition-all ${
@@ -200,7 +201,9 @@ export default function HabitConverterPage() {
             {t("habitConverterTitle")}
           </h1>
           <p className={`text-xl max-w-2xl mx-auto ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-            เปลี่ยนนิสัยการใช้เงินเล็กๆ น้อยๆ ให้เป็น <span className="font-bold text-yellow-500">"พลังวิเศษ"</span> ในการปลดแอกตัวเองจากหนี้สิน
+            {t("habitConverterDescription2").replace("{magicPower}", `<span class="font-bold text-yellow-500">"${t("magicPower")}"</span>`).split('<span').map((part, i) => i === 0 ? part : <span key={i} dangerouslySetInnerHTML={{ __html: part.split('</span>')[0] }} className="font-bold text-yellow-500" />).concat(t("habitConverterDescription2").includes('</span>') ? t("habitConverterDescription2").split('</span>')[1] : [])}
+            {/* Simple fallback if replace logic is too complex for React element */}
+            {t("habitConverterSubtitle")}
           </p>
         </div>
 
@@ -210,12 +213,12 @@ export default function HabitConverterPage() {
             <div className={`p-6 rounded-3xl border-2 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white border-gray-200"}`}>
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <DollarSign className="w-5 h-5 text-yellow-500" />
-                ตั้งค่าหนี้ของคุณ (จำลอง)
+                {t("debtSettings")}
               </h3>
               
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm opacity-70 mb-1 block">ยอดหนี้คงเหลือ (บาท)</label>
+                  <label className="text-sm opacity-70 mb-1 block">{t("remainingDebt")}</label>
                   <input 
                     type="number" 
                     value={debtAmount} 
@@ -224,7 +227,7 @@ export default function HabitConverterPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm opacity-70 mb-1 block">อัตราดอกเบี้ยต่อปี (%)</label>
+                  <label className="text-sm opacity-70 mb-1 block">{t("annualInterestRate")}</label>
                   <input 
                     type="number" 
                     value={interestRate} 
@@ -233,7 +236,7 @@ export default function HabitConverterPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm opacity-70 mb-1 block">ยอดผ่อนต่อเดือน (บาท)</label>
+                  <label className="text-sm opacity-70 mb-1 block">{t("monthlyPaymentLabel")}</label>
                   <input 
                     type="number" 
                     value={monthlyPayment} 
@@ -247,7 +250,7 @@ export default function HabitConverterPage() {
             <div className={`p-6 rounded-3xl border-2 ${isDarkMode ? "bg-gray-800/50 border-yellow-500/20 shadow-[0_0_20px_rgba(234,179,8,0.05)]" : "bg-yellow-50/50 border-yellow-200"}`}>
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <Zap className="w-5 h-5 text-yellow-500" />
-                เลือกพลังวิเศษของคุณ
+                {t("chooseYourMagicPower")}
               </h3>
               
               <div className="space-y-3 mb-6">
@@ -272,7 +275,9 @@ export default function HabitConverterPage() {
                       className={`flex-1 cursor-pointer font-bold ${isDarkMode ? "text-yellow-50" : "text-gray-700"}`}
                     >
                       {habit.translationKey ? t(habit.translationKey as any) : habit.name}
-                      <span className="block text-xs opacity-60 font-normal">ประหยัดได้ {habit.amount.toLocaleString()}.-</span>
+                      <span className="block text-xs opacity-60 font-normal">
+                        {t("savingPerMonth").replace("{amount}", habit.amount.toLocaleString())}
+                      </span>
                     </Label>
                     
                     {habit.isCustom && (
@@ -289,11 +294,11 @@ export default function HabitConverterPage() {
 
               {/* Add Custom Habit Form */}
               <div className={`p-4 rounded-2xl border-2 border-dashed ${isDarkMode ? "bg-gray-900/30 border-gray-700" : "bg-white border-gray-300"}`}>
-                <p className="text-xs font-bold mb-3 opacity-60 uppercase tracking-wider">เพิ่มพลังวิเศษของคุณเอง</p>
+                <p className="text-xs font-bold mb-3 opacity-60 uppercase tracking-wider">{t("addYourOwnMagicPower")}</p>
                 <div className="space-y-3">
                   <input 
                     type="text" 
-                    placeholder="เช่น ลดค่าบุหรี่, เดินไปทำงาน" 
+                    placeholder={t("customHabitPlaceholder")}
                     value={customHabitName}
                     onChange={(e) => setCustomHabitName(e.target.value)}
                     className={`w-full p-2 text-sm rounded-xl outline-none border-2 focus:border-yellow-500 transition-all ${isDarkMode ? "bg-gray-800 border-gray-700" : "bg-gray-50 border-gray-200"}`}
@@ -301,7 +306,7 @@ export default function HabitConverterPage() {
                   <div className="flex gap-2">
                     <input 
                       type="number" 
-                      placeholder="ยอดประหยัด/เดือน" 
+                      placeholder={t("monthlySavingPlaceholder")}
                       value={customHabitAmount}
                       onChange={(e) => setCustomHabitAmount(e.target.value === "" ? "" : Number(e.target.value))}
                       className={`flex-1 p-2 text-sm rounded-xl outline-none border-2 focus:border-yellow-500 transition-all ${isDarkMode ? "bg-gray-800 border-gray-700" : "bg-gray-50 border-gray-200"}`}
@@ -324,15 +329,15 @@ export default function HabitConverterPage() {
             {/* Real-time Graph */}
             <div className={`p-8 rounded-[2.5rem] border-2 h-[450px] relative ${isDarkMode ? "bg-gray-800/30 border-gray-700" : "bg-white border-gray-200 shadow-xl"}`}>
               <div className="flex items-center justify-between mb-8">
-                <h3 className="text-xl font-black">กราฟจำลองการปลดหนี้</h3>
+                <h3 className="text-xl font-black">{t("debtPayoffGraph")}</h3>
                 <div className="flex gap-4 text-xs font-bold">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-gray-400"></div>
-                    <span>แบบเดิม</span>
+                    <span>{t("originalPlan")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-yellow-500">
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <span>ใช้พลังวิเศษ</span>
+                    <span>{t("withMagicPower")}</span>
                   </div>
                 </div>
               </div>
@@ -366,7 +371,7 @@ export default function HabitConverterPage() {
                       border: "none",
                       boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
                     }}
-                    labelFormatter={(label) => `เดือนที่ ${label}`}
+                    labelFormatter={(label) => `${t("month")} ${label}`}
                   />
                   <Area 
                     type="monotone" 
@@ -375,7 +380,7 @@ export default function HabitConverterPage() {
                     strokeWidth={3}
                     fillOpacity={1} 
                     fill="url(#colorOriginal)" 
-                    name="ยอดหนี้แบบเดิม"
+                    name={t("originalDebtBalance")}
                   />
                   <Area 
                     type="monotone" 
@@ -384,7 +389,7 @@ export default function HabitConverterPage() {
                     strokeWidth={4}
                     fillOpacity={1} 
                     fill="url(#colorImproved)" 
-                    name="ยอดหนี้พลังวิเศษ"
+                    name={t("magicPowerDebtBalance")}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -397,9 +402,9 @@ export default function HabitConverterPage() {
                   <Calendar className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-sm opacity-70">หมดหนี้ไวขึ้น</p>
+                  <p className="text-sm opacity-70">{t("debtFreeFaster")}</p>
                   <p className={`text-3xl font-black ${isDarkMode ? "text-green-400" : "text-green-600"}`}>
-                    {Math.floor(timeSaved / 12)} ปี {timeSaved % 12} เดือน
+                    {Math.floor(timeSaved / 12)} {t("year")} {timeSaved % 12} {t("month")}
                   </p>
                 </div>
               </div>
@@ -409,7 +414,7 @@ export default function HabitConverterPage() {
                   <TrendingDown className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="text-sm opacity-70">ประหยัดดอกเบี้ยได้</p>
+                  <p className="text-sm opacity-70">{t("interestSavedLabel")}</p>
                   <p className={`text-3xl font-black ${isDarkMode ? "text-blue-400" : "text-blue-600"}`}>
                     ฿{interestSaved.toLocaleString()}
                   </p>
@@ -421,23 +426,24 @@ export default function HabitConverterPage() {
             <div className={`p-8 rounded-[2.5rem] text-center border-4 animate-in zoom-in duration-500 ${isDarkMode ? "bg-yellow-500 text-black border-yellow-400" : "bg-yellow-400 text-black border-yellow-500 shadow-2xl"}`}>
               {extraSaving > 0 ? (
                 <>
-                  <p className="text-3xl font-black mb-4">เยี่ยมมาก! 🎉</p>
+                  <p className="text-3xl font-black mb-4">{t("habitSuccessTitle")}</p>
                   <p className="text-xl font-bold leading-relaxed">
-                    แค่ปรับพฤติกรรมนิดหน่อย คุณจะประหยัดดอกเบี้ยได้ <span className="underline decoration-black/30 underline-offset-4">{interestSaved.toLocaleString()}</span> บาท 
-                    และหมดหนี้ไวขึ้นถึง <span className="underline decoration-black/30 underline-offset-4">{Math.floor(timeSaved / 12)} ปี {timeSaved % 12} เดือน</span>!
+                    {t("habitSuccessMessage")
+                      .replace("{interest}", interestSaved.toLocaleString())
+                      .replace("{time}", `${Math.floor(timeSaved / 12)} ${t("year")} ${timeSaved % 12} ${t("month")}`)}
                   </p>
                   <button 
                     onClick={() => router.push("/money-planning")}
                     className="mt-8 px-10 py-4 bg-black text-white font-black rounded-2xl hover:scale-105 transition-transform"
                   >
-                    เริ่มวางแผนจริงจังเลย!
+                    {t("startPlanningSeriously")}
                   </button>
                 </>
               ) : (
                 <>
-                  <p className="text-3xl font-black mb-4">เราทำได้! 💪</p>
+                  <p className="text-3xl font-black mb-4">{t("weCanDoIt")}</p>
                   <p className="text-xl font-bold leading-relaxed">
-                    เลือกพลังงานวิเศษของเรากัน คนเก่ง
+                    {t("chooseMagicPowerPrompt")}
                   </p>
                 </>
               )}
